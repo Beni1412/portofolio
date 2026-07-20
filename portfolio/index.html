@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BeNi — Portfolio</title>
+    <meta
+      name="description"
+      content="BeNi — AI/ML Engineer & Full-Stack Developer. Computer vision, deep learning, NLP and web projects."
+    />
+    <link rel="icon" href="images/logo.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <canvas id="bgCanvas"></canvas>
+
+    <header class="topbar">
+      <div class="topbar__inner">
+        <button
+          class="brand"
+          data-tab-link
+          data-target="home"
+          aria-label="Go to home"
+        >
+          <img src="images/logo.png" alt="Logo" class="brand__logo" />
+          <span class="brand__text"
+            >BENI<span class="brand__dim">...</span></span
+          >
+        </button>
+
+        <nav class="nav" id="mainNav">
+          <button class="nav__link is-active" data-target="home">Home</button>
+          <button class="nav__link" data-target="about">About</button>
+          <button class="nav__link" data-target="skills">Skills</button>
+          <button class="nav__link" data-target="projects">Projects</button>
+          <button class="nav__link" data-target="contact">Contact</button>
+        </nav>
+
+        <div class="topbar__status">
+          <span class="dot" aria-hidden="true"></span>
+          <span class="mono" id="clock">--:--:--</span>
+        </div>
+
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
+          <svg
+            class="icon-sun"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg
+            class="icon-moon"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="display: none"
+          >
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+
+        <button
+          class="nav-toggle"
+          id="navToggle"
+          aria-label="Toggle menu"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- ============ HOME ============ -->
+      <section
+        id="home"
+        class="tab-panel is-active"
+        data-panel
+        aria-label="Home"
+      >
+        <div class="panel-inner hero">
+          <div class="hero__text">
+            <span class="eyebrow animate-item"
+              ><span class="dot dot--sm"></span>Hellow</span
+            >
+            <h1 class="hero__title animate-item">
+              Hi, I'm <span class="accent-text">BeNi</span>.
+            </h1>
+            <p class="hero__role mono animate-item">
+              I build <span id="typingText" class="typing-text"></span
+              ><span class="cursor">|</span>
+            </p>
+            <p class="hero__bio animate-item">
+              Computer Science student at BINUS University passionate about AI
+              and Software Engineering. I build end-to-end applications
+              combining computer vision, deep learning, NLP, and full-stack
+              development. Currently exploring medical imaging, sentiment
+              analysis, and intelligent web applications.
+            </p>
+            <div class="hero__cta animate-item">
+              <button
+                class="btn btn--primary"
+                data-tab-link
+                data-target="projects"
+              >
+                View Projects
+              </button>
+              <a class="btn btn--ghost" href="#" id="cvLink" download
+                >Download CV</a
+              >
+            </div>
+          </div>
+
+          <div
+            class="photo-frame animate-item"
+            style="animation-delay: 0.3s"
+            id="heroPhoto"
+          >
+            <img
+              src="images/profile.jpeg"
+              alt="Photo of BeNi"
+              onerror="
+                this.closest('.photo-frame').classList.add('img-missing')
+              "
+            />
+            <div class="photo-frame__fallback">
+              <span class="photo-frame__initial">B</span>
+              <span class="mono photo-frame__hint"
+                >images/profile.jpg not found<br />drop your photo there</span
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ ABOUT ============ -->
+      <section id="about" class="tab-panel" data-panel aria-label="About">
+        <div class="panel-inner">
+          <div id="aboutMainView" data-view class="about">
+            <div class="photo-frame animate-item">
+              <img
+                src="images/about.jpeg"
+                alt="Photo of BeNi"
+                onerror="
+                  this.closest('.photo-frame').classList.add('img-missing')
+                "
+              />
+              <div class="photo-frame__fallback">
+                <span class="photo-frame__initial">B</span>
+                <span class="mono photo-frame__hint"
+                  >images/profile.jpg not found<br />drop your photo there</span
+                >
+              </div>
+            </div>
+
+            <div class="about__content">
+              <span class="section-eyebrow mono animate-item">02 / ABOUT</span>
+              <h2 class="animate-item">About Me</h2>
+              <p class="animate-item">
+                I'm a Computer Science student passionate about Artificial
+                Intelligence, Machine Learning, and Software Engineering. I enjoy
+                transforming research ideas into real-world applications by
+                building complete solutions from data processing and model
+                development to intuitive web interfaces. My experience includes
+                computer vision, deep learning, natural language processing, and
+                full-stack development through academic research and personal
+                projects.
+              </p>
+              <p class="animate-item">
+                Outside of technology, I've developed strong teamwork and
+                communication skills through entrepreneurship, competitive
+                esports, event organization, and part-time work. I'm always eager
+                to learn new technologies, tackle challenging problems, and build
+                impactful software that people genuinely enjoy using.
+              </p>
+
+              <ul class="about__info mono animate-item">
+                <li><span>Name</span><span>BeNi Mulyawan</span></li>
+                <li>
+                  <span>Education</span
+                  ><span>BINUS University — Computer Science</span>
+                </li>
+                <li><span>Email</span><span>beni.mulyawan@binus.ac.id</span></li>
+                <li><span>Location</span><span>Indonesia</span></li>
+              </ul>
+
+              <button id="btnCertificates" class="btn btn--primary animate-item" style="margin-top: 2rem;">
+                View Certifications
+              </button>
+            </div>
+          </div>
+
+          <div id="certDetailView" data-view style="display: none;">
+            <button class="detail-back mono" id="backToAbout">
+              ← Back to About
+            </button>
+            <div id="certDetail" class="project-detail" style="margin-top: 2rem;">
+              <span class="section-eyebrow mono animate-item">02.1 / CERTIFICATIONS</span>
+              <h2 class="animate-item" style="margin-bottom: 1rem;">My Certifications</h2>
+              <div id="certBreadcrumb" class="mono animate-item" style="margin-bottom: 2rem; cursor: pointer; color: var(--accent); font-size: 0.9rem;"></div>
+              
+              <style>
+                .cert-grid {
+                  display: grid;
+                  grid-template-columns: repeat(4, 1fr);
+                  gap: 1.5rem;
+                }
+                @media (max-width: 1024px) { .cert-grid { grid-template-columns: repeat(3, 1fr); } }
+                @media (max-width: 768px) { .cert-grid { grid-template-columns: repeat(2, 1fr); } }
+                @media (max-width: 480px) { .cert-grid { grid-template-columns: 1fr; } }
+                
+                .cert-card {
+                  background: rgba(255, 255, 255, 0.03);
+                  border: 1px solid rgba(255, 255, 255, 0.1);
+                  border-radius: 8px;
+                  padding: 1rem;
+                  text-align: center;
+                  transition: all 0.3s ease;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  gap: 1rem;
+                  text-decoration: none;
+                  color: rgba(255,255,255,0.8);
+                }
+                .cert-card:hover {
+                  background: rgba(255, 255, 255, 0.08);
+                  transform: translateY(-5px);
+                  border-color: rgba(255,255,255,0.3);
+                  color: #fff;
+                }
+                .cert-card img {
+                  width: 100%;
+                  aspect-ratio: 4/3;
+                  object-fit: cover;
+                  border-radius: 4px;
+                }
+                .cert-card .cert-icon-placeholder {
+                  width: 100%;
+                  aspect-ratio: 4/3;
+                  background: rgba(255, 255, 255, 0.05);
+                  border-radius: 4px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  font-size: 3rem;
+                }
+                .cert-card span {
+                  font-size: 0.9rem;
+                  line-height: 1.4;
+                  font-weight: 500;
+                  display: -webkit-box;
+                  -webkit-line-clamp: 2;
+                  -webkit-box-orient: vertical;
+                  overflow: hidden;
+                }
+              </style>
+
+              <div class="cert-list animate-item" id="certListContainer">
+                <!-- Rendered by main.js -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ SKILLS ============ -->
+      <section id="skills" class="tab-panel" data-panel aria-label="Skills">
+        <div class="panel-inner">
+          <span class="section-eyebrow mono animate-item">03 / SKILLS</span>
+          <h2 class="animate-item">Skill Confidence</h2>
+          <p class="section-sub animate-item">
+            Self-rated, updated as I go. Treat the numbers like a model's
+            confidence score.
+          </p>
+          <div id="skillsWrap" class="skills-wrap animate-item">
+            <!-- rendered by js/main.js from js/data.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ PROJECTS ============ -->
+      <section id="projects" class="tab-panel" data-panel aria-label="Projects">
+        <div class="panel-inner">
+          <div id="projectsGridView" data-view>
+            <span class="section-eyebrow mono animate-item">04 / PROJECTS</span>
+            <h2 class="animate-item">Selected Work</h2>
+            <p class="section-sub animate-item">
+              Click any card — it swaps into a full write-up right here, no page
+              reload.
+            </p>
+            <div class="project-filters animate-item">
+              <button class="filter-btn is-active" data-filter="all">
+                All
+              </button>
+              <button class="filter-btn" data-filter="ai">AI / ML</button>
+              <button class="filter-btn" data-filter="other">Other</button>
+            </div>
+            <div id="projectsGrid" class="projects-grid">
+              <!-- rendered by js/main.js from js/data.js -->
+            </div>
+          </div>
+
+          <div id="projectDetailView" data-view hidden>
+            <button class="detail-back mono" id="backToGrid">
+              ← Back to all projects
+            </button>
+            <div id="projectDetail" class="project-detail">
+              <!-- rendered by js/main.js -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ CONTACT ============ -->
+      <section id="contact" class="tab-panel" data-panel aria-label="Contact">
+        <div class="panel-inner contact">
+          <div class="contact__info">
+            <span class="section-eyebrow mono animate-item">05 / CONTACT</span>
+            <h2 class="animate-item">Let's Work Together</h2>
+            <p class="animate-item">
+              Got a project in mind, or want to talk about CV/ML? My inbox is
+              open.
+            </p>
+            <ul class="contact__list mono animate-item">
+              <li>
+                ✉
+                <a href="beni.mulyawan@binus.ac.id"
+                  >beni.mulyawan@binus.ac.id</a
+                >
+              </li>
+              <li>📍 Indonesia</li>
+            </ul>
+            <div class="contact__socials">
+              <a
+                href="https://github.com/Beni1412"
+                aria-label="GitHub"
+                class="social-link"
+                target="_blank"
+                rel="noopener"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+                  ></path>
+                </svg>
+              </a>
+              <a
+                href="https://www.linkedin.com/in/beni-mulyawan-020407326/"
+                aria-label="LinkedIn"
+                class="social-link"
+                target="_blank"
+                rel="noopener"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+                  ></path>
+                  <rect x="2" y="9" width="4" height="12"></rect>
+                  <circle cx="4" cy="4" r="2"></circle>
+                </svg>
+              </a>
+              <a
+                href="https://www.instagram.com/beni__mulyawan/"
+                aria-label="Instagram"
+                class="social-link"
+                target="_blank"
+                rel="noopener"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path
+                    d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"
+                  ></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <form class="contact__form animate-item" id="contactForm">
+            <label class="field">
+              <span class="mono">Your Name</span>
+              <input type="text" name="name" required />
+            </label>
+            <label class="field">
+              <span class="mono">Your Email</span>
+              <input type="email" name="email" required />
+            </label>
+            <label class="field">
+              <span class="mono">Subject</span>
+              <input type="text" name="subject" />
+            </label>
+            <label class="field">
+              <span class="mono">Message</span>
+              <textarea name="message" rows="5" required></textarea>
+            </label>
+            <button type="submit" class="btn btn--primary">Send Message</button>
+            <p class="contact__note mono" id="contactNote" hidden>
+              Message ready — connect this form to a backend or a service like
+              Formspree to actually send it. See README.
+            </p>
+          </form>
+        </div>
+      </div>
+
+    </main>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
