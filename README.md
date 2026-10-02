@@ -4,8 +4,6 @@ Portfolio 1-page (Home / About / Skills / Projects / Contact) yang jalan kayak a
 
 Tema visual: HUD/computer-vision — bounding box biru muda di project card & foto, grid overlay, scanline tipis, font mono buat data/label. Ngikutin bidang lo (CV/ML) biar kerasa personal, bukan template generic.
 
-
-  
 ## Struktur file
 
 ```

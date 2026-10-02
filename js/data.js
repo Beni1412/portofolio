@@ -44,10 +44,12 @@ const projects = [
     category: 'Computer Vision · Deep Learning',
     status: '',
     year: '2025',
-    blurb:
-      'Brain tumor classification from MRI scans, with Grad-CAM++ explainability and a live inference app.',
-    description:
-      "NeuroScan classifies brain MRI scans into tumor categories using an EfficientNetB1 transfer-learning pipeline. Grad-CAM++ is layered on top to visualize which regions of the scan drove each prediction, making the model's reasoning inspectable rather than a black box. The project was written up as a research paper for COMP6696 at BINUS, went through a full peer-review revision cycle (dataset documentation, preprocessing replicability), and shipped as a Streamlit app for interactive inference. Baseline comparisons were run against a custom CNN and VGG16.",
+    blurb: 'Brain tumor classification from MRI scans, with Grad-CAM++ explainability and a live inference app.',
+    problem: 'Black-box deep learning models in healthcare lack transparency, making it hard for medical professionals to trust AI predictions for critical diagnoses like brain tumors.',
+    user: 'Medical practitioners and researchers seeking AI-assisted diagnosis tools that provide explainable insights.',
+    solution: 'An EfficientNetB1 transfer-learning pipeline to classify MRI scans, layered with Grad-CAM++ to visually highlight the specific regions of the scan that drove each prediction.',
+    challenge: 'Ensuring dataset documentation and preprocessing replicability to meet peer-review standards, while optimizing the model to run interactively in a web app.',
+    impact: 'Successfully benchmarked against Custom CNN and VGG16 baselines, producing a robust and explainable Streamlit app. The project was written up as a research paper for COMP6696.',
     role: '',
     team: '',
     stack: [
@@ -84,8 +86,11 @@ const projects = [
     year: '2025',
     blurb:
       'AI-powered skin analysis web app — YOLOv8/EfficientNet model behind a full React + FastAPI stack.',
-    description:
-      'SkinMate is a web app that analyzes skin conditions from a photo using a YOLOv8/EfficientNet model. The system pairs a React + TypeScript frontend with a Python FastAPI service for ML inference, with the model hosted on Hugging Face. The system leverages DBSCAN for acne zone clustering and provides personalized skincare recommendations.',
+    problem: 'Determining the severity and exact location of skin conditions like acne is difficult without professional dermatology tools.',
+    user: 'Individuals looking for accessible, AI-powered skincare tracking and personalized recommendations.',
+    solution: 'A full-stack application (React + FastAPI) that uses YOLOv8/EfficientNet for photo-based skin analysis, leveraging DBSCAN to cluster acne zones.',
+    challenge: 'Hosting a PyTorch ML backend reliably while ensuring the front-end remains responsive during inference.',
+    impact: 'Provided an intuitive scanning history and dashboard, making skin condition tracking effortless for end-users.',
     role: 'Frontend development (History, Dashboard, Scan pages), literature review, presentation materials',
     team: '',
     stack: [
@@ -122,8 +127,11 @@ const projects = [
     year: '2025',
     blurb:
       'Hybrid aspect-based sentiment analysis for F&B reviews, combining DistilBERT with a Gemini LLM layer.',
-    description:
-      'Nomnom tackles aspect-based sentiment analysis (ABSA) for food & beverage reviews using a hybrid approach: a fine-tuned DistilBERT model handles the core classification, while a Gemini LLM layer helps with aspect extraction and edge cases plain classifiers struggle with. The goal is to pull out not just overall sentiment but sentiment per aspect — food quality, service, price, ambience — from unstructured review text.',
+    problem: 'Standard sentiment analysis only gives a broad positive/negative score, failing to capture nuances in F&B reviews where a user might praise the food but complain about the service.',
+    user: 'Restaurant owners and F&B managers who need granular insights into customer feedback across different aspects (food quality, service, price, ambience).',
+    solution: 'A hybrid NLP pipeline combining a fine-tuned DistilBERT classifier for core sentiment with a Gemini LLM layer to extract and handle complex aspects and edge cases from unstructured review text.',
+    challenge: 'Balancing the speed and structured output of DistilBERT with the deep contextual understanding of Gemini without blowing up latency.',
+    impact: 'Created a robust ABSA system packaged with an IEEE-format related work section, shipped as a live web application.',
     role: '',
     team: '',
     stack: ['Python', 'DistilBERT', 'Gemini API', 'NLP'],
@@ -153,8 +161,11 @@ const projects = [
     year: '2025',
     blurb:
       'Multi-model classification pipeline for diabetes risk, benchmarking five algorithms on the PIMA dataset.',
-    description:
-      'A machine learning pipeline for predicting diabetes risk, built for the COMP6577 Machine Learning course. Uses the PIMA dataset plus a symptom-based dataset, with SMOTE for class balancing, stratified 70/15/15 splits, and threshold tuning to manage the precision/recall trade-off. Five algorithms — Logistic Regression, KNN, Decision Tree, Random Forest and SVM — were tuned with GridSearchCV and compared head-to-head.',
+    problem: 'Early detection of diabetes risk is crucial for preventative healthcare, but comparing the raw efficacy of different ML algorithms can be complex.',
+    user: 'Healthcare researchers and data science students exploring predictive medical models.',
+    solution: 'A comprehensive machine learning pipeline using the PIMA and symptom datasets. It employs SMOTE for class balancing and evaluates five different algorithms (LR, KNN, Decision Tree, Random Forest, SVM) tuned via GridSearchCV.',
+    challenge: 'Managing the precision/recall trade-off through careful threshold tuning, and ensuring rigorous evaluation via stratified 70/15/15 splits.',
+    impact: 'Produced a full academic report and presentation deck comparing the benchmarked models head-to-head for the COMP6577 Machine Learning course.',
     role: 'Notebook development, model comparison, report and presentation',
     team: '',
     stack: ['Python', 'scikit-learn', 'SMOTE', 'GridSearchCV', 'Pandas'],
@@ -185,8 +196,11 @@ const projects = [
     year: '2026',
     blurb:
       'A full-stack NLP application that provides personalized career matching and resume skill extraction.',
-    description:
-      'An end-to-end platform designed to help job seekers by analyzing their resumes and matching them to job postings. The system features a modern React frontend and a Python (FastAPI) backend. It uses natural language processing (NLP) heuristics, keyword matching, and skill taxonomy analysis to extract skills from CVs, calculate job match scores, and recommend targeted courses.',
+    problem: 'Job seekers often struggle to align their resumes with job postings, resulting in missed opportunities despite having the right skills.',
+    user: 'Job seekers wanting data-driven feedback on their resumes, and recruiters looking to match candidates to roles.',
+    solution: 'An end-to-end NLP platform with a React frontend and Python (FastAPI) backend that automatically extracts skills from CVs using taxonomy heuristics, calculates Jaccard similarity-based match scores, and recommends targeted courses.',
+    challenge: 'Building a robust keyword taxonomy and ensuring accurate skill extraction from variously formatted resumes.',
+    impact: 'Delivered a functional, modern full-stack application that bridges the gap between raw resume text and actionable career advice.',
     role: 'Full-Stack Developer',
     team: '',
     stack: ['React', 'Python (FastAPI)', 'Supabase', 'NLP', 'Vercel'],
@@ -216,8 +230,11 @@ const projects = [
     year: '2026',
     blurb:
       'Interactive web app using on-device hand tracking to overlay monkey memes based on your hand gestures.',
-    description:
-      'A purely client-side web application built with vanilla HTML/JS and on-device machine learning for hand tracking. It captures webcam feed, detects specific hand gestures in real-time (like thumbs up, peace sign, open palm), and reacts by popping up corresponding monkey memes on the screen. No server required.',
+    problem: 'Most gesture-recognition applications require heavy server-side processing, introducing latency and privacy concerns.',
+    user: 'Web users looking for a fun, interactive camera experience without having to download apps or upload their video feed.',
+    solution: 'A purely client-side web application built with vanilla HTML/JS and MediaPipe. It tracks hands locally and uses the Canvas API to overlay monkey memes in real-time based on specific gestures (thumbs up, peace sign).',
+    challenge: 'Optimizing the machine learning models and Canvas rendering to run at zero-latency entirely on the client\'s device.',
+    impact: 'An instantly accessible, highly engaging browser toy that demonstrates the power of on-device web ML.',
     role: 'Solo Developer',
     team: '',
     stack: ['JavaScript', 'MediaPipe', 'Canvas API', 'HTML5'],
@@ -247,8 +264,11 @@ const projects = [
     year: '2025',
     blurb:
       'A virtual zoo interactive web application with animal QR carousels and quizzes.',
-    description:
-      'Predatoria (Kebun Binatang Virtual) is an interactive, animal-themed web application designed for learning and playing. It features a carousel of animal QR codes, playful animated mascots, ambient background music, and an integrated animal guessing quiz. The app is built entirely using vanilla HTML, CSS (with a dynamic pink/green theme toggle), and JavaScript.',
+    problem: 'Traditional virtual learning applications can be static and unengaging for kids learning about animals.',
+    user: 'Children and educators looking for interactive and playful ways to learn about predators.',
+    solution: 'An interactive virtual zoo web app featuring 8-Wall 3D models, an animal QR carousel, animated mascots, ambient music, and a guessing quiz—built entirely with vanilla HTML, CSS, and JS.',
+    challenge: 'Managing complex DOM animations, theme toggles (pink/green), and audio state without relying on heavy frameworks.',
+    impact: 'A fun, lightweight educational toy shipped as a static site that runs flawlessly in any modern browser.',
     role: 'Solo Developer',
     team: '',
     stack: ['HTML5', 'CSS3', 'JavaScript'],
@@ -279,8 +299,11 @@ const projects = [
     year: '2024',
     blurb:
       'Interactive canvas birthday pages — fireworks, floating balloons, ambient audio, photo pop-ups.',
-    description:
-      'A pair of personalized birthday web pages built as creative-coding side projects, made for Nico and Alice. Canvas-based fireworks and floating balloon animations run alongside looping ambient audio, with photo pop-ups revealed as part of the interaction. Built purely with vanilla JS and the Canvas API — no frameworks, no libraries.',
+    problem: 'Standard digital birthday cards lack interactivity and personalization.',
+    user: 'Friends (Nico, Alice, Tania) receiving a unique, memorable digital gift.',
+    solution: 'Personalized, interactive canvas-based web pages featuring fireworks, floating balloons, looping ambient audio, and interactive photo pop-ups, built purely with vanilla JS.',
+    challenge: 'Coordinating timing between the Web Audio API and complex particle simulations (fireworks) on the Canvas API without any external libraries.',
+    impact: 'A highly customized and engaging creative coding project that runs smoothly without external dependencies.',
     role: 'Solo project — concept, animation, audio, build',
     team: '',
     stack: ['JavaScript', 'Canvas API', 'CSS Animations', 'Web Audio API'],

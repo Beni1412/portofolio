@@ -1,8 +1,6 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4063116537285955"
-     crossorigin="anonymous"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BeNi — Portfolio</title>
@@ -113,16 +111,9 @@
       >
         <div class="panel-inner hero">
           <div class="hero__text">
-            <span class="eyebrow animate-item"
-              ><span class="dot dot--sm"></span>Hellow</span
-            >
             <h1 class="hero__title animate-item">
               Hi, I'm <span class="accent-text">BeNi</span>.
             </h1>
-            <p class="hero__role mono animate-item">
-              I build <span id="typingText" class="typing-text"></span
-              ><span class="cursor">|</span>
-            </p>
             <p class="hero__bio animate-item">
               Computer Science student at BINUS University passionate about AI
               and Software Engineering. I build end-to-end applications
@@ -169,8 +160,9 @@
       <!-- ============ ABOUT ============ -->
       <section id="about" class="tab-panel" data-panel aria-label="About">
         <div class="panel-inner">
-          <div id="aboutMainView" data-view class="about">
-            <div class="photo-frame animate-item">
+          <div id="aboutMainView" data-view>
+            <div class="about">
+              <div class="photo-frame animate-item">
               <img
                 src="images/about.jpeg"
                 alt="Photo of BeNi"
@@ -185,7 +177,6 @@
                 >
               </div>
             </div>
-         
 
             <div class="about__content">
               <span class="section-eyebrow mono animate-item">02 / ABOUT</span>
@@ -209,19 +200,91 @@
               </p>
 
               <ul class="about__info mono animate-item">
-                <li><span>Name</span><span>BeNi Mulyawan</span></li>
+                <li><span>Name</span><span>Beni Mulyawan</span></li>
                 <li>
                   <span>Education</span
                   ><span>BINUS University — Computer Science</span>
                 </li>
+                <li>
+                  <span>GPA</span>
+                  <span style="display: flex; align-items: center;">
+                    3.92 / 4.00
+                    <a href="transkrip.pdf" target="_blank" style="margin-left: 12px; color: var(--accent); text-decoration: none; font-size: 0.9em; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">📄 View Transcript ↗</a>
+                  </span>
+                </li>
                 <li><span>Email</span><span>beni.mulyawan@binus.ac.id</span></li>
-                <li><span>Location</span><span>Indonesia</span></li>
+                <li><span>Location</span><span>Jakarta, Indonesia</span></li>
               </ul>
+            </div> <!-- End about__content -->
+          </div> <!-- End about grid -->
 
-              <button id="btnCertificates" class="btn btn--primary animate-item" style="margin-top: 2rem;">
-                View Certifications
-              </button>
+          <!-- Full width container below the grid -->
+          <div class="about-extended" style="margin-top: 4rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; width: 100%;">
+            <div class="animate-item">
+              <h3 style="font-size: 1.1rem; margin-bottom: 1.5rem; color: var(--text); border-bottom: 1px solid var(--line); padding-bottom: 8px;">Experience</h3>
+              
+              <div style="margin-bottom: 1.5rem; position: relative; padding-left: 1.2rem; border-left: 2px solid var(--panel-border);">
+                <div style="position: absolute; left: -5px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent);"></div>
+                <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 4px;">
+                  <a href="https://novalearningcentre.id/" target="_blank" style="margin: 0; font-size: 1rem; font-weight: 600; color: var(--text); text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text)'">Part-time Coding Lecturer ↗</a>
+                  <span style="font-family: var(--mono); font-size: 0.75rem; color: var(--accent);">Present</span>
+                </div>
+                <span style="font-weight: 500; display: block; margin-bottom: 6px; font-size: 0.85rem; color: var(--text-faint);">
+                  NovaLearningCentre
+                </span>
+                <p style="font-size: 0.85rem; color: var(--text-dim); margin: 0; line-height: 1.6;">
+                  Mengajar dan membimbing siswa dalam materi programming/coding.
+                </p>
+              </div>
+
+              <div style="margin-bottom: 1.5rem; position: relative; padding-left: 1.2rem; border-left: 2px solid var(--panel-border);">
+                <div style="position: absolute; left: -5px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent);"></div>
+                <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 4px;">
+                  <a href="https://novalearningcentre.id/" target="_blank" style="margin: 0; font-size: 1rem; font-weight: 600; color: var(--text); text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text)'">Freelance Web Maintenance ↗</a>
+                  <span style="font-family: var(--mono); font-size: 0.75rem; color: var(--accent);">Present</span>
+                </div>
+                <span style="font-weight: 500; display: block; margin-bottom: 6px; font-size: 0.85rem; color: var(--text-faint);">
+                  NovaLearningCentre
+                </span>
+                <p style="font-size: 0.85rem; color: var(--text-dim); margin: 0; line-height: 1.6;">
+                  Bertanggung jawab dalam pemeliharaan dan optimasi website operasional.
+                </p>
+              </div>
+
+              <div style="position: relative; padding-left: 1.2rem; border-left: 2px solid var(--panel-border);">
+                <div style="position: absolute; left: -5px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent);"></div>
+                <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 4px;">
+                  <a href="https://www.instagram.com/hellodokidoki/" target="_blank" style="margin: 0; font-size: 1rem; font-weight: 600; color: var(--text); text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text)'">Entrepreneur ↗</a>
+                  <span style="font-family: var(--mono); font-size: 0.75rem; color: var(--accent);">Present</span>
+                </div>
+                <span style="font-weight: 500; display: block; margin-bottom: 6px; font-size: 0.85rem; color: var(--text-faint);">
+                  Hello Doki Doki
+                </span>
+                <p style="font-size: 0.85rem; color: var(--text-dim); margin: 0; line-height: 1.6;">
+                  Membangun dan mengelola bisnis F&B yang berfokus pada produk mochi buatan tangan.
+                </p>
+              </div>
             </div>
+
+            <div class="animate-item">
+              <h3 style="font-size: 1.1rem; margin-bottom: 1.5rem; color: var(--text); border-bottom: 1px solid var(--line); padding-bottom: 8px;">Publications</h3>
+              <div style="position: relative; padding-left: 1.2rem; border-left: 2px solid var(--panel-border);">
+                <div style="position: absolute; left: -5px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent);"></div>
+                <a href="https://share.google/AjBVxxEphOc2bXrbu" target="_blank" style="font-weight: 600; color: var(--text); line-height: 1.5; display: block; margin-bottom: 6px; font-size: 0.95rem; transition: color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text)'">
+                  Interpreting Deep CNN Decisions in Multi-Class Brain Tumor Classification via Grad-CAM
+                </a>
+                <span style="font-size: 0.85rem; color: var(--text-dim); display: flex; align-items: center; gap: 8px;">
+                  📄 <a href="sertifikat/icimtech.pdf" target="_blank" style="color: var(--accent); text-decoration: none;">IEEE Conference Publication / IEEE Xplore</a>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="animate-item" style="text-align: left; margin-top: 3rem;">
+            <button id="btnCertificates" class="btn btn--primary">
+              View Certifications
+            </button>
+          </div>
           </div>
 
           <div id="certDetailView" data-view style="display: none;">
@@ -246,7 +309,7 @@
                 .cert-card {
                   background: rgba(255, 255, 255, 0.03);
                   border: 1px solid rgba(255, 255, 255, 0.1);
-                  border-radius: 8px;
+                  border-radius: 24px;
                   padding: 1rem;
                   text-align: center;
                   transition: all 0.3s ease;
@@ -267,13 +330,13 @@
                   width: 100%;
                   aspect-ratio: 4/3;
                   object-fit: cover;
-                  border-radius: 4px;
+                  border-radius: 16px;
                 }
                 .cert-card .cert-icon-placeholder {
                   width: 100%;
                   aspect-ratio: 4/3;
                   background: rgba(255, 255, 255, 0.05);
-                  border-radius: 4px;
+                  border-radius: 16px;
                   display: flex;
                   align-items: center;
                   justify-content: center;
@@ -319,10 +382,6 @@
           <div id="projectsGridView" data-view>
             <span class="section-eyebrow mono animate-item">04 / PROJECTS</span>
             <h2 class="animate-item">Selected Work</h2>
-            <p class="section-sub animate-item">
-              Click any card — it swaps into a full write-up right here, no page
-              reload.
-            </p>
             <div class="project-filters animate-item">
               <button class="filter-btn is-active" data-filter="all">
                 All
@@ -363,7 +422,6 @@
                   >beni.mulyawan@binus.ac.id</a
                 >
               </li>
-              <li>📍 Indonesia</li>
             </ul>
             <div class="contact__socials">
               <a
@@ -469,15 +527,5 @@
 
     <script src="js/data.js"></script>
     <script src="js/main.js"></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4063116537285955"
-     crossorigin="anonymous"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="autorelaxed"
-     data-ad-client="ca-pub-4063116537285955"
-     data-ad-slot="6123429877"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
   </body>
 </html>

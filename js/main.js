@@ -352,41 +352,41 @@
         : '',
     ].join('');
 
+    const renderSection = (title, content) => `
+      <div style="margin-bottom: 2.5rem;">
+        <h4 style="margin: 0 0 14px 0; font-size: 0.85rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; border-bottom: 1px solid var(--panel-border); padding-bottom: 8px;">${title}</h4>
+        <div style="margin: 0; font-size: 0.95rem; line-height: 1.7; color: var(--text-dim);">${content}</div>
+      </div>
+    `;
+
     detailWrap.innerHTML = `
-      <span class="detail-tag mono">PROJECTS / ${p.title}</span>
       <div class="detail-head">
         <h2>${p.title}</h2>
-        <div class="detail-meta">
-          <span class="chip chip--accent">${p.category}</span>
-          ${p.status ? `<span class="chip">${p.status}</span>` : ''}
-          ${p.year ? `<span class="chip">${p.year}</span>` : ''}
-        </div>
       </div>
       <div id="galleryHost">${renderGalleryHtml(galleryItems(p), currentSlide)}</div>
       ${p.role ? `<p class="detail-role mono">${p.role}${p.team ? ' — ' + p.team : ''}</p>` : ''}
       <div class="detail-body">
         <div class="detail-col">
-          <h4>Overview</h4>
-          <p>${p.description}</p>
+          ${p.problem ? renderSection('The Problem', `<p style="margin:0">${p.problem}</p>`) : ''}
+          ${p.solution ? renderSection('The Solution', `<p style="margin:0">${p.solution}</p>`) : ''}
+          ${p.challenge ? renderSection('Challenges', `<p style="margin:0">${p.challenge}</p>`) : ''}
+          ${p.impact ? renderSection('Impact & Results', `<p style="margin:0">${p.impact}</p>`) : ''}
+          ${p.description && !p.problem ? renderSection('Overview', `<p style="margin:0">${p.description}</p>`) : ''}
         </div>
         <div class="detail-col detail-col--side">
+          ${p.user ? renderSection('Target User', `<p style="margin:0">${p.user}</p>`) : ''}
           ${
-            p.stack.length
-              ? `<h4>Tech Stack</h4><ul class="stack-list">${p.stack
-                  .map((t) => `<li class="chip">${t}</li>`)
-                  .join('')}</ul>`
+            p.features && p.features.length
+              ? renderSection('Key Features', `<ul class="feature-list" style="margin:0; padding-left: 1.2rem;">${p.features.map(f => `<li style="margin-bottom:6px;">${f}</li>`).join('')}</ul>`)
               : ''
           }
           ${
-            p.features.length
-              ? `<h4>Highlights</h4><ul class="feature-list">${p.features
-                  .map((f) => `<li>${f}</li>`)
-                  .join('')}</ul>`
+            p.stack && p.stack.length
+              ? renderSection('Tech Choices', `<div class="stack-list" style="display:flex; flex-wrap:wrap; gap:8px;">${p.stack.map(t => `<span class="chip" style="margin:0;">${t}</span>`).join('')}</div>`)
               : ''
           }
-          ${linksHtml ? `<div class="detail-links">${linksHtml}</div>` : ''}
+          ${linksHtml ? `<div class="detail-links" style="margin-top: 1rem;">${linksHtml}</div>` : ''}
         </div>
-      </div>
     `;
 
     wireGalleryEvents();
@@ -490,56 +490,63 @@
   }
   type();
 
-  /* ---------- CUSTOM CURSOR ---------- */
+  /* ---------- CUSTOM CURSOR (duck) ---------- */
   const cursorDot = document.getElementById('cursorDot');
-  const cursorRing = document.getElementById('cursorRing');
+  const cursorRing = document.getElementById('cursorRing'); // unused, kept in DOM harmlessly
 
   if (window.matchMedia('(pointer: fine)').matches) {
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
-    let ringX = mouseX;
-    let ringY = mouseY;
+    let lastX = mouseX;
+    let waddle = 0; // little rotation wiggle based on horizontal movement
+    let isHover = false;
+    let isClick = false;
+
+    // Inline style sets the transform, so hover/click scale is computed
+    // here too (a CSS class transform would just get overridden).
+    function applyTransform() {
+      const scale = isClick ? 0.85 : isHover ? 1.25 : 1;
+      cursorDot.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%)) rotate(${waddle}deg) scale(${scale})`;
+    }
 
     window.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-      cursorDot.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%))`;
+
+      // tilt the duck slightly toward the direction it's moving
+      const dx = mouseX - lastX;
+      lastX = mouseX;
+      const targetTilt = Math.max(-18, Math.min(18, dx * 1.5));
+      waddle += (targetTilt - waddle) * 0.25;
+
+      applyTransform();
     });
 
-    function animateCursor() {
-      ringX += (mouseX - ringX) * 0.2;
-      ringY += (mouseY - ringY) * 0.2;
-      cursorRing.style.transform = `translate(calc(${ringX}px - 50%), calc(${ringY}px - 50%))`;
-      requestAnimationFrame(animateCursor);
-    }
-    animateCursor();
-
-    const hoverElements = document.querySelectorAll(
-      'a, button, input, textarea, [tabindex], .proj-card',
-    );
-    hoverElements.forEach((el) => {
-      el.addEventListener('mouseenter', () =>
-        cursorRing.classList.add('hover'),
-      );
-      el.addEventListener('mouseleave', () =>
-        cursorRing.classList.remove('hover'),
-      );
+    // little bounce on click, duck-approved
+    window.addEventListener('mousedown', () => {
+      isClick = true;
+      cursorDot.classList.add('click');
+      applyTransform();
+    });
+    window.addEventListener('mouseup', () => {
+      isClick = false;
+      cursorDot.classList.remove('click');
+      applyTransform();
     });
 
-    // Rebind on mutations if needed, or just let static elements work.
-    // For project cards that are dynamically generated, we delegate or rebind.
+    const HOVER_SELECTOR = 'a, button, input, textarea, [tabindex], .proj-card';
     document.addEventListener('mouseover', (e) => {
-      if (
-        e.target.closest('a, button, input, textarea, [tabindex], .proj-card')
-      ) {
-        cursorRing.classList.add('hover');
+      if (e.target.closest(HOVER_SELECTOR)) {
+        isHover = true;
+        cursorDot.classList.add('hover');
+        applyTransform();
       }
     });
     document.addEventListener('mouseout', (e) => {
-      if (
-        e.target.closest('a, button, input, textarea, [tabindex], .proj-card')
-      ) {
-        cursorRing.classList.remove('hover');
+      if (e.target.closest(HOVER_SELECTOR)) {
+        isHover = false;
+        cursorDot.classList.remove('hover');
+        applyTransform();
       }
     });
   } else {
@@ -641,53 +648,105 @@
   }
 
   /* ---------- CERTIFICATIONS VIEW ---------- */
-  const btnCertificates = document.getElementById("btnCertificates");
-  const certListContainer = document.getElementById("certListContainer");
-  const aboutMainView = document.getElementById("aboutMainView");
-  const certDetailView = document.getElementById("certDetailView");
-  const backToAbout = document.getElementById("backToAbout");
+  const btnCertificates = document.getElementById('btnCertificates');
+  const certListContainer = document.getElementById('certListContainer');
+  const aboutMainView = document.getElementById('aboutMainView');
+  const certDetailView = document.getElementById('certDetailView');
+  const backToAbout = document.getElementById('backToAbout');
 
   const certifications = [
     {
-      type: "folder",
-      name: "komdigi",
+      type: 'folder',
+      name: 'komdigi',
       count: 10,
       files: [
-        { name: "AI Engineer For Milenial", file: "images/sertifikat/komdigi/Sertifikat_BENI MULYAWAN_AI Engineer For Milenial.pdf" },
-        { name: "Dasar-Dasar Implementasi Kecerdasan Artifisial", file: "images/sertifikat/komdigi/Sertifikat_BENI MULYAWAN_Dasar-Dasar Implementasi Kecerdasan Artifisial.pdf" },
-        { name: "Dasar-dasar Keamanan AI", file: "images/sertifikat/komdigi/Sertifikat_BENI MULYAWAN_Dasar-dasar Keamanan AI.pdf" },
-        { name: "Ethical Hacker For Dummies", file: "images/sertifikat/komdigi/Sertifikat_BENI MULYAWAN_Ethical Hacker For Dummies (1).pdf" },
-        { name: "Fundamental Junior Web Developer", file: "images/sertifikat/komdigi/Sertifikat_BENI MULYAWAN_Fundamental Junior Web Developer.pdf" },
-        { name: "Intermediate Junior Web Developer", file: "images/sertifikat/komdigi/Sertifikat_BENI MULYAWAN_Intermediate Junior Web Developer.pdf" },
-        { name: "Introduction To Cloud Computing", file: "images/sertifikat/komdigi/Sertifikat_BENI MULYAWAN_Introduction To Cloud Computing.pdf" },
-        { name: "Konsep Pemrograman", file: "images/sertifikat/komdigi/Sertifikat_BENI MULYAWAN_Konsep Pemrograman (1).pdf" },
-        { name: "Memahami Aspek Pengembangan Produk AI", file: "images/sertifikat/komdigi/Sertifikat_BENI MULYAWAN_Memahami Aspek Pengembangan Produk AI.pdf" },
-        { name: "Wawasan Karir dalam Bidang Data Analytics", file: "images/sertifikat/komdigi/Sertifikat_BENI MULYAWAN_Wawasan Karir dalam Bidang Data Analytics.pdf" }
-      ]
+        {
+          name: 'AI Engineer For Milenial',
+          file: 'images/sertifikat/komdigi/Sertifikat_BENI MULYAWAN_AI Engineer For Milenial.pdf',
+        },
+        {
+          name: 'Dasar-Dasar Implementasi Kecerdasan Artifisial',
+          file: 'images/sertifikat/komdigi/Sertifikat_BENI MULYAWAN_Dasar-Dasar Implementasi Kecerdasan Artifisial.pdf',
+        },
+        {
+          name: 'Dasar-dasar Keamanan AI',
+          file: 'images/sertifikat/komdigi/Sertifikat_BENI MULYAWAN_Dasar-dasar Keamanan AI.pdf',
+        },
+        {
+          name: 'Ethical Hacker For Dummies',
+          file: 'images/sertifikat/komdigi/Sertifikat_BENI MULYAWAN_Ethical Hacker For Dummies (1).pdf',
+        },
+        {
+          name: 'Fundamental Junior Web Developer',
+          file: 'images/sertifikat/komdigi/Sertifikat_BENI MULYAWAN_Fundamental Junior Web Developer.pdf',
+        },
+        {
+          name: 'Intermediate Junior Web Developer',
+          file: 'images/sertifikat/komdigi/Sertifikat_BENI MULYAWAN_Intermediate Junior Web Developer.pdf',
+        },
+        {
+          name: 'Introduction To Cloud Computing',
+          file: 'images/sertifikat/komdigi/Sertifikat_BENI MULYAWAN_Introduction To Cloud Computing.pdf',
+        },
+        {
+          name: 'Konsep Pemrograman',
+          file: 'images/sertifikat/komdigi/Sertifikat_BENI MULYAWAN_Konsep Pemrograman (1).pdf',
+        },
+        {
+          name: 'Memahami Aspek Pengembangan Produk AI',
+          file: 'images/sertifikat/komdigi/Sertifikat_BENI MULYAWAN_Memahami Aspek Pengembangan Produk AI.pdf',
+        },
+        {
+          name: 'Wawasan Karir dalam Bidang Data Analytics',
+          file: 'images/sertifikat/komdigi/Sertifikat_BENI MULYAWAN_Wawasan Karir dalam Bidang Data Analytics.pdf',
+        },
+      ],
     },
     {
-      type: "folder",
-      name: "microsoft",
+      type: 'folder',
+      name: 'microsoft',
       count: 3,
       files: [
-        { name: "Pembelajaran Mesin Azure", file: "images/sertifikat/microsoft/pembelajaran mesin azure.pdf" },
-        { name: "Pengantar Machine Learning", file: "images/sertifikat/microsoft/pengantar machine learning.pdf" },
-        { name: "Penyerapan Data", file: "images/sertifikat/microsoft/penyerapan data.pdf" }
-      ]
+        {
+          name: 'Pembelajaran Mesin Azure',
+          file: 'images/sertifikat/microsoft/pembelajaran mesin azure.pdf',
+        },
+        {
+          name: 'Pengantar Machine Learning',
+          file: 'images/sertifikat/microsoft/pengantar machine learning.pdf',
+        },
+        {
+          name: 'Penyerapan Data',
+          file: 'images/sertifikat/microsoft/penyerapan data.pdf',
+        },
+      ],
     },
-    { type: "file", name: "Beelingua", file: "images/sertifikat/Beelingua.pdf" },
-    { type: "file", name: "BNCC", file: "images/sertifikat/BNCC.png", isImage: true },
-    { type: "file", name: "Pelatihan Azure", file: "images/sertifikat/pelatihan azure.pdf" }
+    {
+      type: 'file',
+      name: 'Beelingua',
+      file: 'images/sertifikat/Beelingua.pdf',
+    },
+    {
+      type: 'file',
+      name: 'BNCC',
+      file: 'images/sertifikat/BNCC.png',
+      isImage: true,
+    },
+    {
+      type: 'file',
+      name: 'Pelatihan Azure',
+      file: 'images/sertifikat/pelatihan azure.pdf',
+    },
   ];
 
   if (certListContainer) {
     const rootCerts = certifications;
 
-    window.renderCertGrid = function(items, folderName = null) {
+    window.renderCertGrid = function (items, folderName = null) {
       let html = '<div class="cert-grid">';
-      
+
       items.forEach((item, index) => {
-        if (item.type === "folder") {
+        if (item.type === 'folder') {
           html += `
             <div class="cert-card" style="cursor:pointer;" onclick="openCertFolder(${index})">
               <div class="cert-icon-placeholder" style="background: rgba(255,193,7,0.1); color: #ffc107;">📁</div>
@@ -695,13 +754,21 @@
             </div>
           `;
         } else {
-          const file = item.file || item.url;
-          const isImg = item.isImage || file.toLowerCase().endsWith('.png') || file.toLowerCase().endsWith('.jpg') || file.toLowerCase().endsWith('.jpeg');
+          const targetUrl = item.url || item.file;
+          
+          let thumbSrc = null;
+          if (item.image) {
+            thumbSrc = item.image;
+          } else if (item.file && (item.isImage || item.file.toLowerCase().match(/\.(png|jpg|jpeg)$/))) {
+            thumbSrc = item.file;
+          }
+
           html += `
-            <a href="${file}" target="_blank" class="cert-card">
-              ${isImg 
-                ? `<img src="${file}" alt="${item.name}" loading="lazy" onerror="this.outerHTML='<div class=\\'cert-icon-placeholder\\'>📄</div>'">` 
-                : `<div class="cert-icon-placeholder">📄</div>`
+            <a href="${targetUrl}" target="_blank" class="cert-card">
+              ${
+                thumbSrc
+                  ? `<img src="${thumbSrc}" alt="${item.name}" loading="lazy" onerror="this.outerHTML='<div class=\\'cert-icon-placeholder\\'>📄</div>'">`
+                  : `<div class="cert-icon-placeholder">📄</div>`
               }
               <span>${item.name}</span>
             </a>
@@ -711,21 +778,21 @@
       html += '</div>';
       certListContainer.innerHTML = html;
 
-      const bc = document.getElementById("certBreadcrumb");
+      const bc = document.getElementById('certBreadcrumb');
       if (bc) {
         if (folderName) {
           bc.innerHTML = `← Back to all certificates / <b style="color:#fff;">${folderName}</b>`;
           bc.onclick = () => renderCertGrid(rootCerts, null);
         } else {
-          bc.innerHTML = "";
+          bc.innerHTML = '';
           bc.onclick = null;
         }
       }
     };
 
-    window.openCertFolder = function(index) {
+    window.openCertFolder = function (index) {
       const folder = rootCerts[index];
-      if (folder && folder.type === "folder") {
+      if (folder && folder.type === 'folder') {
         renderCertGrid(folder.files, folder.name);
       }
     };
@@ -734,17 +801,22 @@
   }
 
   if (btnCertificates && aboutMainView && certDetailView) {
-    btnCertificates.addEventListener("click", () => {
-      aboutMainView.style.display = "none";
-      certDetailView.style.display = "block";
-      window.scrollTo({ top: document.getElementById("about").offsetTop - 100, behavior: "smooth" });
+    btnCertificates.addEventListener('click', () => {
+      aboutMainView.style.display = 'none';
+      certDetailView.style.display = 'block';
+      window.scrollTo({
+        top: document.getElementById('about').offsetTop - 100,
+        behavior: 'smooth',
+      });
     });
 
-    backToAbout.addEventListener("click", () => {
-      certDetailView.style.display = "none";
-      aboutMainView.style.display = "grid";
-      window.scrollTo({ top: document.getElementById("about").offsetTop - 100, behavior: "smooth" });
+    backToAbout.addEventListener('click', () => {
+      certDetailView.style.display = 'none';
+      aboutMainView.style.display = 'grid';
+      window.scrollTo({
+        top: document.getElementById('about').offsetTop - 100,
+        behavior: 'smooth',
+      });
     });
   }
-
 })();
